@@ -54,6 +54,7 @@ public class MainActivity extends BaseActivity {
 
                 Room data = roomDatas.get(position);
 
+
                 Toast.makeText(mContext, data.getDescription(), Toast.LENGTH_SHORT).show();
 
                 return true; // true : 롱클릭만 false : 그냥 클릭도 같이
