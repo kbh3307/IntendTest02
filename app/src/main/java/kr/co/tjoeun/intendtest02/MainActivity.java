@@ -1,8 +1,10 @@
 package kr.co.tjoeun.intendtest02;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,7 +56,7 @@ public class MainActivity extends BaseActivity {
 
         binding.roomListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
 //                꾹 누르고 있으면, 해당 방의 설명을 Toast로 출력
 
@@ -64,9 +66,24 @@ public class MainActivity extends BaseActivity {
 //                Toast.makeText(mContext, data.getDescription(), Toast.LENGTH_SHORT).show();
 
 //                  꾹 누르면, 해당 아이템을 목록에서 삭제
-                roomDatas.remove(position);
+//                  지우기 전에, 정말 지울건지 ? 확인받자
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
+                alert.setTitle("방 삭제 확인");
+                alert.setMessage("정말 이 방을 삭제하시겠습니까?");
+                alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+//                        얼럿에서도 확인을 누른 경우
+                        roomDatas.remove(position);
 //                어댑터에게 새로고침 시킴
-                roomAdapter.notifyDataSetChanged();
+                        roomAdapter.notifyDataSetChanged();
+                    }
+                });
+                alert.setNegativeButton("취소", null);
+                alert.show();
+
 
                 return true; // true : 롱클릭만 false : 그냥 클릭도 같이
             }
