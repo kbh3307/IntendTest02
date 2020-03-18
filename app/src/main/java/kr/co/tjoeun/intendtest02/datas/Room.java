@@ -9,6 +9,26 @@ public class Room implements Serializable {
     private int floor;
     private String description;
 
+    public String getFloorToString(){
+//        층수를 => 상황에 맞는 층수로 가공
+        //        주소/층수 결합해서
+
+        String floorStr = "";
+
+        if(this.floor > 0){
+            floorStr = String.format("%d층", this.floor);
+        }
+        else if(this.floor == 0){
+            floorStr = "반지하";
+        }
+        else{
+//            -1 => "지하 1층" 으로 가공
+            floorStr = String.format("지하 %d층", this.floor*-1);
+        }
+
+        return floorStr;
+    }
+
     public String getFormattedPrice(){
 //        상황에 따라 ?억 ?천, ?천인지로
 //        나눠서 리턴을 해줌
@@ -20,7 +40,7 @@ public class Room implements Serializable {
             return String.format("%d억 %,d만원", uk, thousand);
         }
         else{
-            return String.format("%,d", this.price);
+            return String.format("%,d만원", this.price);
         }
 
     }
