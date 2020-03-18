@@ -1,0 +1,2 @@
+rootProject.name='IntendTest02'
+include ':app'
